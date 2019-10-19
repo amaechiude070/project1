@@ -110,6 +110,14 @@ resource "aws_instance" "amaechi-ec2" {
   subnet_id = "${aws_subnet.amasubnet1.id}"  
   key_name = "amaec1"
   security_groups = ["${aws_security_group.amaechidevops-SG.id}"]
+  user_data = << EOF
+		#! /bin/bash
+                sudo yum install httpd -y
+		sudo echo 
+		sudo systemctl start httpd
+		sudo systemctl enable httpd
+		echo "Automation for the people" /var/www/html/index.html
+	EOF
 
 tags = {
     Name = "amaechi-ec2"
